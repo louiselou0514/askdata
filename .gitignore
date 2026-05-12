@@ -1,0 +1,22 @@
+# Python
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/**/*.pyc
+backend/**/*.pyo
+*.egg-info/
+
+# Secrets
+backend/.env
+frontend/.env.local
+
+# Next.js
+frontend/.next/
+frontend/node_modules/
+
+# Sample data (optional — remove if you want these in the repo)
+sample_data/
+
+# Misc
+.DS_Store
+*.log
