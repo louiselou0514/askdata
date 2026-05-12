@@ -23,6 +23,7 @@ export default function ChatPage() {
   const [externalQuestion, setExternalQuestion] = useState<string>("");
   const [chatKey, setChatKey] = useState(0);
   const [showAllHistory, setShowAllHistory] = useState(false);
+  const [historyCollapsed, setHistoryCollapsed] = useState(false);
   const [suggestedPrompts, setSuggestedPrompts] = useState<SuggestedPrompt[]>([]);
   const [promptsLoading, setPromptsLoading] = useState(false);
 
@@ -170,14 +171,20 @@ export default function ChatPage() {
         </div>
 
         {/* History sidebar */}
-        <aside className="w-60 flex-shrink-0 border-l border-gray-100 flex flex-col bg-white">
-          <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">History</span>
-            {history.length > 0 && (
-              <span className="text-xs text-gray-400">{visibleHistory.length}</span>
-            )}
+        <aside className={`flex-shrink-0 border-l border-gray-100 flex flex-col bg-white transition-all duration-200 ${historyCollapsed ? "w-8" : "w-60"}`}>
+          <div className="px-2 py-3 border-b border-gray-100 flex items-center justify-between">
+            {!historyCollapsed && <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide px-2">History</span>}
+            <button
+              onClick={() => setHistoryCollapsed((c) => !c)}
+              className="ml-auto p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors flex-shrink-0"
+              title={historyCollapsed ? "Show history" : "Hide history"}
+            >
+              <svg className={`w-3.5 h-3.5 transition-transform duration-200 ${historyCollapsed ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
-          <div className="flex-1 overflow-y-auto">
+          <div className={`flex-1 overflow-y-auto ${historyCollapsed ? "hidden" : ""}`}>
             {history.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full px-4 text-center">
                 <span className="text-2xl mb-2">💬</span>
